@@ -5,23 +5,36 @@ class APIFeatures {
   }
 
   search() {
-    const location = this.queryStr.location
-      ? {
-          address: {
-            $regex: this.queryStr.location,
-            $options: 'i',
-          },
-        }
-      : {};
+    if (this.queryStr.location) {
+      const location = this.queryStr.location
+        ? {
+            address: {
+              $regex: this.queryStr.location,
+              $options: 'i',
+            },
+          }
+        : {};
 
-    this.query = this.query.find({ ...location });
+      this.query = this.query.find({ ...location });
+    } else if (this.queryStr.name) {
+      const name = this.queryStr.name
+        ? {
+            name: {
+              $regex: this.queryStr.name,
+              $options: 'i',
+            },
+          }
+        : {};
+
+      this.query = this.query.find({ ...name });
+    }
     return this;
   }
 
   filter() {
     const queryCopy = { ...this.queryStr };
     // Remove fields from query
-    const removeFields = ['page'];
+    const removeFields = ['location', 'name', 'page'];
     removeFields.forEach((el) => delete queryCopy[el]);
     this.query = this.query.find(queryCopy);
     return this;
