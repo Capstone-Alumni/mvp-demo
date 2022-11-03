@@ -26,7 +26,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
         };
       }
 
-      await store.dispatch(loadUserProfile(1));
+      const { id } = params;
+
+      await store.dispatch(loadUserProfile(id));
     }
 );
 

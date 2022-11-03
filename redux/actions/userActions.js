@@ -8,6 +8,9 @@ import {
   LOAD_USER_REQUEST,
   LOAD_USER_SUCCESS,
   CLEAR_ERRORS,
+  LOAD_PROFILE_BY_ID,
+  LOAD_PROFILE_SUCCESS,
+  LOAD_PROFILE_FAIL,
 } from '../constants/userConstants';
 
 // Register user
@@ -55,6 +58,27 @@ export const loadUser = () => async (dispatch) => {
     });
   }
 };
+
+// Load profile by id
+export const loadUserProfile = (id) => async (dispatch) => {
+  try {
+    dispatch({
+      type: LOAD_PROFILE_BY_ID,
+    });
+
+    const { data } = await axios.get(`/api/profile?id=${id}`);
+
+    dispatch({
+      type: LOAD_PROFILE_SUCCESS,
+      payload: data.user,
+    })
+  } catch(error) {
+    dispatch({
+      type: LOAD_PROFILE_FAIL,
+      payload: error.message.data.message,
+    });
+  }
+}
 
 // Clear Errors
 export const clearError = () => async (dispatch) => {

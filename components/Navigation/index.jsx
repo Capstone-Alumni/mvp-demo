@@ -65,7 +65,7 @@ const NavigationBar = () => {
         {!loading && user && (
           <>
             <div className={classes.userAvatarContainer}>
-              <Link href="/profile" passHref>
+              <Link href={`/profile/${user._id}`} passHref>
                 <img
                   src={user.avatar.url}
                   alt="user-avatar"
