@@ -31,6 +31,12 @@ const userSchema = new mongoose.Schema({
       default: 'https://graph.facebook.com/674527979558467/picture?type=large',
     },
   },
+  facebook: {
+    url: {
+      type: String,
+      default: 'https://graph.facebook.com/674527979558467/picture?type=large',
+    },
+  },
   status: {
     type: Boolean,
     default: true,
@@ -54,6 +60,25 @@ const userSchema = new mongoose.Schema({
   createdAt: {
     type: Date,
     default: Date.now,
+  },
+  address: {
+    type: String,
+  },
+  gender: {
+    type: String,
+  },
+  marriage: {
+    type: Boolean,
+    default: false,
+  },
+  career: {
+    type: String,
+  },
+  school_year: {
+    type: Object,
+  },
+  classes: {
+    type: Object,
   },
   resetPasswordToken: String,
   resetPasswordExpire: Date,

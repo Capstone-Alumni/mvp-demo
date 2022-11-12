@@ -10,9 +10,17 @@ import mongoose from 'mongoose';
 import { name_to_role_id_mapping, roleOf } from '../constants/role';
 
 const registerUser = catchAsyncError(async (req, res) => {
-  const { email, username, password, fullname, date_of_birth, phone } =
-    req.body;
-  console.log(email, username, password, fullname, date_of_birth, phone);
+  const {
+    email,
+    username,
+    password,
+    fullname,
+    date_of_birth,
+    phone,
+    address,
+    gender,
+    career,
+  } = req.body;
 
   await User.create({
     email,
@@ -21,7 +29,23 @@ const registerUser = catchAsyncError(async (req, res) => {
     fullname,
     date_of_birth,
     phone,
+    address,
+    gender,
+    career,
     role_id: mongoose.mongo.ObjectId(name_to_role_id_mapping[roleOf.ALUMNI]),
+    school_year: {
+      id: 0,
+      name: '',
+      class_id: 0,
+      school_id: 0,
+    },
+    classes: {
+      id: 0,
+      name: '',
+      alumni_id: 0,
+      alumni_head: 0,
+      teacher_id: 0,
+    },
   });
   res.status(200).json({
     success: true,
@@ -102,22 +126,6 @@ const resetPassword = catchAsyncError(async (req, res, next) => {
     message: 'Password updated successfully',
   });
 });
-
-let schoolYearVsClasses = {
-  school_year: {
-    id: 0,
-    name: '',
-    class_id: 0,
-    school_id: 0,
-  },
-  classes: {
-    id: 0,
-    name: '',
-    alumni_id: 0,
-    alumni_head: 0,
-    teacher_id: 0,
-  },
-};
 
 // Current user profile => /api/me
 const currentUserProfile = catchAsyncError(async (req, res) => {

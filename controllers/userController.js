@@ -7,22 +7,6 @@ import ErrorHandler from '../utils/errorHandler';
 import { roleOf } from '../constants/role';
 import mongoose from 'mongoose';
 
-let schoolYearVsClasses = {
-  school_year: {
-    id: 0,
-    name: '',
-    class_id: 0,
-    school_id: 0,
-  },
-  classes: {
-    id: 0,
-    name: '',
-    alumni_id: 0,
-    alumni_head: 0,
-    teacher_id: 0,
-  },
-};
-
 const allUser = catchAsyncError(async (req, res) => {
   const resPerPage = 10;
   const usersCount = await User.countDocuments();
@@ -76,8 +60,6 @@ const userProfileById = catchAsyncError(async (req, res, next) => {
                   major: doc.major ? doc.major : '',
                   user_id: doc.user_id,
                 },
-                //TODO: replace with real data
-                ...schoolYearVsClasses,
               };
             }
           }
@@ -88,11 +70,7 @@ const userProfileById = catchAsyncError(async (req, res, next) => {
     if (user) {
       res.status(200).json({
         success: true,
-        //TODO: replace with real data
-        user: {
-          ...user,
-          ...schoolYearVsClasses,
-        },
+        user,
       });
     } else {
       return next(new ErrorHandler('Invalid ID', 400));
