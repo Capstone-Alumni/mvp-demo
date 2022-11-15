@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { useStyles } from './styles';
-import { Avatar, Box, Button, Card, CardContent, Container, InputAdornment, TextField, Typography, useTheme } from '@material-ui/core';
+import { Avatar, Box, Button, Card, CardContent, Container, InputAdornment, MenuItem, TextField, Typography, useTheme } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import { deepPurple } from '@material-ui/core/colors';
 import useAxios from '../../hooks/useAxios';
@@ -10,22 +10,32 @@ import { useState } from 'react';
 import { debounce } from 'lodash';
 import { useCallback } from 'react';
 import { Pagination } from '@material-ui/lab';
+import { classes, schoolYears } from '../../common/staticData';
 
 const Directory = () => {
   const theme = useTheme();
   const [page, setPage] = useState(1);
   const [query, setQuery] = useState('');
+  const [classes, setClasses] = useState('');
+  const [schoolYear, setSchoolYear] = useState('');
 
   const { fetchData, response: res, error, loading } = useAxios();
 
   const onSearch = useCallback(debounce((queryName) => {
-    console.log(queryName);
     setPage(1);
     fetchData({
       method: 'get',
-      url: `/api/users?page=1&name=${queryName}`
+      url: `/api/users?page=1&name=${queryName}&school_year=${schoolYear}&classes=${classes}`
     });
   }, 2000), []);
+
+  useEffect(() => {
+    setPage(1);
+    fetchData({
+      method: 'get',
+      url: `/api/users?page=1&name=${query}&school_year=${schoolYear}&classes=${classes}`
+    });
+  }, [schoolYear, classes])
 
  
   useEffect(() => {
@@ -42,7 +52,7 @@ const Directory = () => {
         paddingBottom: theme.spacing(4),
       }}
     >
-      <Box style={{ width: '100%', marginBottom: theme.spacing(4) }}>
+      <Box style={{ style: 'flex', width: '100%', marginBottom: theme.spacing(4) }}>
         <TextField
           id="search-alumni"
           label="Tìm kiếm"
@@ -61,6 +71,24 @@ const Directory = () => {
             }
           }}
         />
+        <TextField
+          id="select-school-year"
+          label="Niên khóa"
+          variant="outlined"
+          select
+          InputProps={{
+            value: schoolYear,
+            onChange: (e) => {
+              setSchoolYear(e.target.value);
+            }
+          }}
+        >
+          {
+            schoolYears.map(year => (
+              <MenuItem key={year.id} value={year.name}>{year.name}</MenuItem>
+            ))
+          }
+        </TextField>
       </Box>
 
       {
