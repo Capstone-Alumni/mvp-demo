@@ -6,6 +6,6 @@ import { isAuthenticatedUser } from '../../../middlewares/auth';
 
 const handler = nc({ onError });
 dbConnect();
-handler.use(isAuthenticatedUser).get(allUser);
+handler.get(allUser);
 
 export default handler;

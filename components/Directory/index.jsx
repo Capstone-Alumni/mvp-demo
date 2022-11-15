@@ -1,6 +1,7 @@
 import React from 'react';
+import Link from 'next/link';
 import { useStyles } from './styles';
-import { Avatar, Box, Button, Card, CardContent, Container, InputAdornment, Link, TextField, Typography, useTheme } from '@material-ui/core';
+import { Avatar, Box, Button, Card, CardContent, Container, InputAdornment, TextField, Typography, useTheme } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import { deepPurple } from '@material-ui/core/colors';
 import useAxios from '../../hooks/useAxios';
@@ -9,28 +10,6 @@ import { useState } from 'react';
 import { debounce } from 'lodash';
 import { useCallback } from 'react';
 import { Pagination } from '@material-ui/lab';
-
-const mockData = [{
-  id: 1,
-  avatar: '',
-  name: 'Nguyen Van A',
-  schoolYear: '2011-2015',
-  class: '12A8',
-}, {
-  id: 2,
-  avatar: '',
-  name: 'Le Van Luyen',
-  schoolYear: '2011-2015',
-  class: '12A8',
-}, {
-  id: 3,
-  avatar: '',
-  name: 'Hap phu',
-  schoolYear: '2011-2015',
-  class: '12A8',
-}];
-
-
 
 const Directory = () => {
   const theme = useTheme();
@@ -94,28 +73,33 @@ const Directory = () => {
               </Typography>
               {
                 res.users.map((data) => (
-                  <Box
+                  <Link
                     key={data.id}
-                    style={{
-                      backgroundColor: deepPurple[50],
-                      borderRadius: theme.spacing(2),
-                      padding: theme.spacing(2),
-                      marginBottom: theme.spacing(3),
-                    }}
+                    href={`/profile/${data._id}`}
                   >
-                    <Box style={{ display: 'flex', flexDirection: 'row', alignItems: 'flex-start' }}>
-                      <Box>
-                        <Avatar src={data.avatar.url} style={{ marginRight: theme.spacing(2), width: theme.spacing(8), height: theme.spacing(8) }}/>
-                      </Box>
-                      <Box style={{ flex: 1 }}>
-                        <Typography variant="h6">{data.name}</Typography>
-                        <Typography variant="subtitle2">Lớp {data.class}</Typography>
-                      </Box>
-                      <Box>
-                        <Typography variant="subtitle1">Niên khoá {data.schoolYear}</Typography> 
+                    <Box
+                      style={{
+                        backgroundColor: deepPurple[50],
+                        borderRadius: theme.spacing(2),
+                        padding: theme.spacing(2),
+                        marginBottom: theme.spacing(3),
+                      }}
+                    >
+                      <Box style={{ display: 'flex', flexDirection: 'row', alignItems: 'flex-start' }}>
+                        <Box>
+                          <Avatar src={data.avatar.url} style={{ marginRight: theme.spacing(2), width: theme.spacing(8), height: theme.spacing(8) }}/>
+                        </Box>
+                        <Box style={{ flex: 1 }}>
+                          <Typography variant="h6">{data.fullname}</Typography>
+                          <Typography variant="subtitle2">{`Lớp: ${data.classes ?? 'Không có thông tin'}`}</Typography>
+                        </Box>
+                        <Box>
+                          <Typography variant="subtitle1">{`Niên khoá: ${data.school_year ?? 'Không có thông tin'}`}</Typography> 
+                        </Box>
                       </Box>
                     </Box>
-                  </Box>
+                  </Link>
+                  
                 ))
               }
             </>

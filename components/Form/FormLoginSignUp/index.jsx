@@ -12,6 +12,8 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 const schemaSignUp = yup
   .object({
     email: yup.string().email('Invalid format').required('Email is required'),
+    school_year: yup.string().required('This field is required'),
+    classes: yup.string().required('This field is required'),
     password: yup
       .string()
       .required('Password is required')
@@ -43,6 +45,8 @@ const Form = ({ type, title, inputs, handleFilledForm }) => {
     resolver: yupResolver(type === 'login' ? schemaLogin : schemaSignUp),
   });
 
+  console.log(errors);
+
   const handleRenderInputs = (register, errors) => {
     return inputs.map((input) => {
       return (
@@ -53,6 +57,7 @@ const Form = ({ type, title, inputs, handleFilledForm }) => {
           label={input.label}
           name={input.name}
           type={input.type}
+          selectItems={input.selectItems}
           register={register}
           required
           errors={errors}

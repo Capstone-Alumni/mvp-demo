@@ -25,7 +25,8 @@ const SignUp = () => {
   }, [dispatch, success, error]);
 
   const handleFilledForm = (user) => {
-    dispatch(registerUser({ ...user, name: 'Gia An' }));
+    console.log('register', user);
+    dispatch(registerUser({ ...user }));
   };
   return (
     <div className={classes.root}>

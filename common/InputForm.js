@@ -17,11 +17,111 @@ export const loginInputs = [
 
 export const signUpInputs = [
   {
+    label: 'Username',
+    placeholder: 'username',
+    type: 'text',
+    keyName: 'username',
+    name: 'username',
+  },
+  {
+    label: 'Full name',
+    placeholder: 'full name',
+    type: 'text',
+    keyName: 'fullname',
+    name: 'fullname',
+  },
+  {
     label: 'Email',
     placeholder: 'mail@website.com',
     type: 'text',
     keyName: '1',
     name: 'email',
+  },
+  {
+    label: 'School year',
+    placeholder: '2001-2004',
+    type: 'select',
+    keyname: 'school-year',
+    name: 'school_year',
+    selectItems: [
+      {
+        id: 1,
+        name: '2005-2008',
+      },
+      {
+        id: 2,
+        name: '2006-2009',
+      },
+      {
+        id: 3,
+        name: '2007-2010',
+      },
+      {
+        id: 4,
+        name: '2008-2011',
+      },
+      {
+        id: 5,
+        name: '2009-2012',
+      },
+      {
+        id: 6,
+        name: '2010-2013',
+      },
+      {
+        id: 7,
+        name: '2011-2014',
+      },
+      {
+        id: 8,
+        name: '2012-2015',
+      },
+      {
+        id: 9,
+        name: '2013-2016',
+      },
+      {
+        id: 10,
+        name: '2014-2017',
+      },
+    ]
+  },
+  {
+    label: 'Class',
+    placeholder: '12A1',
+    type: 'select',
+    keyname: 'classes',
+    name: 'classes',
+    selectItems: [
+      {
+        id: 1,
+        name: '12A1',
+      },
+      {
+        id: 2,
+        name: '12A2'
+      },
+      {
+        id: 3,
+        name: '12CT',
+      },
+      {
+        id: 4,
+        name: '12CV',
+      },
+      {
+        id: 5,
+        name: '12CH',
+      },
+      {
+        id: 6,
+        name: '12TH',
+      },
+      {
+        id: 7,
+        name: '12CL',
+      },
+    ]
   },
   {
     label: 'Password',

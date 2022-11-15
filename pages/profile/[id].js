@@ -10,25 +10,14 @@ const Index = () => {
   );
 };
 
-Index.getLayout = (page) => <Layout title="Account | Easy10">{page}</Layout>;
+Index.getLayout = (page) => <Layout title="Profile">{page}</Layout>;
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ req, params }) => {
-      const session = await getSession({ req });
-
-      if (!session) {
-        return {
-          redirect: {
-            destination: '/',
-            permanent: false,
-          },
-        };
-      }
-
       const { id } = params;
 
-      await store.dispatch(loadUserProfile(id));
+      await store.dispatch(loadUserProfile(req, id));
     }
 );
 

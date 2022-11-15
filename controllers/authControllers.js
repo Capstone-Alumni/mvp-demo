@@ -20,6 +20,8 @@ const registerUser = catchAsyncError(async (req, res) => {
     address,
     gender,
     career,
+    school_year,
+    classes,
   } = req.body;
 
   await User.create({
@@ -33,19 +35,8 @@ const registerUser = catchAsyncError(async (req, res) => {
     gender,
     career,
     role_id: mongoose.mongo.ObjectId(name_to_role_id_mapping[roleOf.ALUMNI]),
-    school_year: {
-      id: 0,
-      name: '',
-      class_id: 0,
-      school_id: 0,
-    },
-    classes: {
-      id: 0,
-      name: '',
-      alumni_id: 0,
-      alumni_head: 0,
-      teacher_id: 0,
-    },
+    school_year,
+    classes,
   });
   res.status(200).json({
     success: true,
@@ -135,7 +126,7 @@ const currentUserProfile = catchAsyncError(async (req, res) => {
     Role,
   });
 
-  if (user && user.role_id.name !== roleOf.TEACHER) {
+  if (user && user.role_id?.name !== roleOf.TEACHER) {
     if (!user.major) {
       await Alumni.findOneAndUpdate(
         { user_id: req.user._id },
@@ -155,7 +146,7 @@ const currentUserProfile = catchAsyncError(async (req, res) => {
                 user_id: doc.user_id,
               },
               //TODO: replace with real data
-              ...schoolYearVsClasses,
+              // ...schoolYearVsClasses,
             };
           }
         }
@@ -166,9 +157,50 @@ const currentUserProfile = catchAsyncError(async (req, res) => {
     success: true,
     user: {
       ...user._doc,
-      ...schoolYearVsClasses,
+      // ...schoolYearVsClasses,
     },
   });
 });
 
-export { registerUser, forgotPassword, resetPassword, currentUserProfile };
+const updateUserProfile = catchAsyncError(async (req, res) => {
+  const {
+    fullname,
+    date_of_birth,
+    phone,
+    address,
+    gender,
+    career,
+    marriage,
+    facebook_url
+  } = req.body;
+
+  let user = await User.findById(req.user._id).populate({
+    path: 'role_id',
+    select: 'name',
+    Role,
+  });
+
+  if (user) {
+    user.fullname = fullname;
+    user.date_of_birth = date_of_birth;
+    user.phone = phone;
+    user.address = address;
+    user.gender = gender;
+    user.career = career;
+    user.marriage = marriage;
+    user.facebook = { url: facebook_url };
+    await user.save();
+    res.status(200).json({
+      status: true,
+      message: 'Update succuess',
+      user: user,
+    })
+  } else {
+    res.status(400).json({
+      status: false,
+      message: 'Cannot find user',
+    })
+  }
+});
+
+export { registerUser, forgotPassword, resetPassword, currentUserProfile, updateUserProfile };

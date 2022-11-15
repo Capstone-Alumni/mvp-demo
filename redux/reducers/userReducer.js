@@ -8,6 +8,10 @@ import {
   CLEAR_ERRORS,
   LOAD_PROFILE_BY_ID,
   LOAD_PROFILE_SUCCESS,
+  UPDATE_PROFILE_SUCCESS,
+  LOAD_PROFILE_FAIL,
+  UPDATE_PROFILE_FAIL,
+  UPDATE_PROFILE,
 } from '../constants/userConstants';
 
 // All reducer
@@ -75,7 +79,26 @@ export const loadedUserReducer = (state = { loading: true }, action) => {
         loadingProfile: false,
         currentProfile: action.payload,
       };
-    case LOAD_USER_FAIL:
+    case LOAD_PROFILE_FAIL:
+      return {
+        ...state,
+        loadingProfile: false,
+        error: action.payload,
+      }
+
+    case UPDATE_PROFILE:
+      return {
+        ...state,
+        loadingProfile: true,
+      };
+    case UPDATE_PROFILE_SUCCESS:
+      return {
+        ...state,
+        loadingProfile: false,
+        currentProfile: action.payload,
+        user: action.payload,
+      };
+    case UPDATE_PROFILE_FAIL:
       return {
         ...state,
         loadingProfile: false,
