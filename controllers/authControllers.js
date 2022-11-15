@@ -1,18 +1,51 @@
 import User from '../models/user';
+import Role from '../models/role';
+import Alumni from '../models/alumni';
 import catchAsyncError from '../middlewares/catchAsyncError';
 import absoluteUrl from 'next-absolute-url';
 import ErrorHandler from '../utils/errorHandler';
 import sendEmail from '../utils/sendEmail';
 import crypto from 'crypto';
+import mongoose from 'mongoose';
+import { name_to_role_id_mapping, roleOf } from '../constants/role';
 
 const registerUser = catchAsyncError(async (req, res) => {
-  const { name, email, password } = req.body;
-  console.log(name, email, password);
+  const {
+    email,
+    username,
+    password,
+    fullname,
+    date_of_birth,
+    phone,
+    address,
+    gender,
+    career,
+  } = req.body;
 
   await User.create({
-    name,
     email,
+    username,
     password,
+    fullname,
+    date_of_birth,
+    phone,
+    address,
+    gender,
+    career,
+    role_id: mongoose.mongo.ObjectId(name_to_role_id_mapping[roleOf.ALUMNI]),
+    school_year: {
+      id: 0,
+      name: '',
+      class_id: 0,
+      school_id: 0,
+    },
+    classes: {
+      id: 0,
+      name: '',
+      alumni_id: 0,
+      alumni_head: 0,
+      teacher_id: 0,
+    },
   });
   res.status(200).json({
     success: true,
@@ -96,10 +129,45 @@ const resetPassword = catchAsyncError(async (req, res, next) => {
 
 // Current user profile => /api/me
 const currentUserProfile = catchAsyncError(async (req, res) => {
-  const user = await User.findById(req.user._id);
+  let user = await User.findById(req.user._id).populate({
+    path: 'role_id',
+    select: 'name',
+    Role,
+  });
+
+  if (user && user.role_id.name !== roleOf.TEACHER) {
+    if (!user.major) {
+      await Alumni.findOneAndUpdate(
+        { user_id: req.user._id },
+        {
+          user_id: req.user._id,
+        },
+        { upsert: true, new: true }, // options
+        function (err, doc) {
+          // callback
+          if (err) {
+            // handle error
+          } else {
+            user = {
+              ...user,
+              major: {
+                major: doc.major ? doc.major : '',
+                user_id: doc.user_id,
+              },
+              //TODO: replace with real data
+              ...schoolYearVsClasses,
+            };
+          }
+        }
+      ).clone();
+    }
+  }
   res.status(200).json({
     success: true,
-    user,
+    user: {
+      ...user._doc,
+      ...schoolYearVsClasses,
+    },
   });
 });
 
