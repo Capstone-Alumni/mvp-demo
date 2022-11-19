@@ -1,4 +1,4 @@
-import { Typography } from '@material-ui/core';
+import { MenuItem, Select, TextField, Typography } from '@material-ui/core';
 import React from 'react';
 
 const Input = ({
@@ -7,19 +7,36 @@ const Input = ({
   label = 'Email',
   type = 'text',
   name,
+  selectItems = [],
   register = null,
   required = null,
   errors = null,
 }) => {
-  console.log(errors);
   return (
     <div className={classNames.input}>
       <Typography>{label}</Typography>
-      <input
-        placeholder={placeholder}
-        type={type}
-        {...register(name, { required })}
-      />
+      {
+        type === 'select'
+          ? (
+            <select
+              {...register(name, { required })}
+            >
+              {
+                selectItems.map(item => (
+                  <option key={item.id} value={item.value}>{item.name}</option>
+                ))
+              }
+            </select>
+          )
+          : (
+            <input
+              placeholder={placeholder}
+              type={type}
+              {...register(name, { required })}
+            />
+          )
+      }
+      
       <Typography className={classNames.error}>
         {errors[name]?.message}
       </Typography>

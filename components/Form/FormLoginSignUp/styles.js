@@ -102,6 +102,20 @@ export const useStyles = makeStyles((theme) => ({
         color: theme.palette.text.secondary,
       },
     },
+    '& select': {
+      width: '100%',
+      borderRadius: '24px',
+      fontSize: '16px',
+      marginTop: '8px',
+      padding: '11px 1.5rem',
+      outline: 'none',
+      color: theme.palette.text.primary,
+      backgroundColor: theme.palette.background.default,
+      border: `2px solid ${theme.palette.border.default}`,
+      '&::placeholder': {
+        color: theme.palette.text.secondary,
+      },
+    },
   },
   forgotPassword: {
     display: 'flex',

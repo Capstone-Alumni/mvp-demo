@@ -4,7 +4,11 @@ const bcrypt = require('bcryptjs');
 const crypto = require('crypto');
 
 const userSchema = new mongoose.Schema({
-  name: {
+  id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Alumni',
+  },
+  username: {
     type: String,
     required: [true, 'Please enter your name'],
     maxLength: [50, 'Your name cannot exceed 50 characters'],
@@ -21,10 +25,6 @@ const userSchema = new mongoose.Schema({
     minLength: [6, 'Your password must be longer than 6 characters'],
     select: false,
   },
-  location: {
-    type: String,
-    default: 'Việt Nam',
-  },
   avatar: {
     url: {
       type: String,
@@ -32,26 +32,57 @@ const userSchema = new mongoose.Schema({
     },
   },
   facebook: {
-    type: String,
+    url: {
+      type: String,
+      default: 'https://graph.facebook.com/674527979558467/picture?type=large',
+    },
   },
-  password: {
-    type: String,
-    select: false,
+  status: {
+    type: Boolean,
+    default: true,
   },
-  role: {
+  fullname: {
     type: String,
-    default: 'user',
+    required: [true, 'Please enter your full name'],
+    maxLength: [50, 'Your full name cannot exceed 50 characters'],
+  },
+  date_of_birth: {
+    type: String,
   },
   work_experience: {
     type: Array,
   },
   onQuiz: {
+  role_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Role',
+  },
+  phone: {
     type: String,
-    default: null,
+    minLength: [10, 'Your phone must be longer than 9 numbers'],
   },
   createdAt: {
     type: Date,
     default: Date.now,
+  },
+  address: {
+    type: String,
+  },
+  gender: {
+    type: String,
+  },
+  marriage: {
+    type: Boolean,
+    default: false,
+  },
+  career: {
+    type: String,
+  },
+  school_year: {
+    type: Object,
+  },
+  classes: {
+    type: Object,
   },
   resetPasswordToken: String,
   resetPasswordExpire: Date,

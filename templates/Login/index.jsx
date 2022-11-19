@@ -4,6 +4,7 @@ import { useStyles } from '../../styles/SignUpLoginStyles';
 import Form from '../../components/Form/FormLoginSignUp';
 import CoverSignUpLogin from '../../components/CoverSignUpLogin';
 import { signIn } from 'next-auth/client';
+import { toast } from 'react-toastify';
 
 const Login = () => {
   const classes = useStyles();

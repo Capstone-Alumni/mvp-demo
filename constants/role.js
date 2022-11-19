@@ -1,0 +1,26 @@
+export const roleOf = {
+  ADMIN: 'ADMIN',
+  SCHOOL_ADMIN: 'SCHOOL_ADMIN',
+  ALUMNI_CLASS_HEAD: 'ALUMNI_CLASS_HEAD',
+  ALUMNI_SCHOOL_YEAR_HEAD: 'ALUMNI_SCHOOL_YEAR_HEAD',
+  ALUMNI: 'ALUMNI',
+  TEACHER: 'TEACHER',
+};
+
+export const role_id_to_name_mapping = {
+  '6366944e5d1693f0ec51bbbb': roleOf.ADMIN,
+  '636694705d1693f0ec51bbbc': roleOf.SCHOOL_ADMIN,
+  '636694765d1693f0ec51bbbd': roleOf.ALUMNI_CLASS_HEAD,
+  '636694835d1693f0ec51bbbe': roleOf.ALUMNI_SCHOOL_YEAR_HEAD,
+  '636694905d1693f0ec51bbc0': roleOf.ALUMNI,
+  '636694995d1693f0ec51bbc1': roleOf.TEACHER,
+};
+
+export const name_to_role_id_mapping = {
+  [roleOf.ADMIN]: '6366944e5d1693f0ec51bbbb',
+  [roleOf.SCHOOL_ADMIN]: '636694705d1693f0ec51bbbc',
+  [roleOf.ALUMNI_CLASS_HEAD]: '636694765d1693f0ec51bbbd',
+  [roleOf.ALUMNI_SCHOOL_YEAR_HEAD]: '636694835d1693f0ec51bbbe',
+  [roleOf.ALUMNI]: '636694905d1693f0ec51bbc0',
+  [roleOf.TEACHER]: '636694995d1693f0ec51bbc1',
+};
