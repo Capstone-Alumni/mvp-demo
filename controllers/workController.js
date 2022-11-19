@@ -11,7 +11,7 @@ const viewMyWorkExperience = catchAsyncError(async (req, res, next) => {
 });
 
 const newWorkExperience = catchAsyncError(async (req, res, next) => {
-  let user = await User.findOne({ id: req.user._id });
+  let user = await User.findById(req.user._id);
   if (user) {
     const data = {
       job_name: req.body.job_name,
@@ -37,42 +37,40 @@ const newWorkExperience = catchAsyncError(async (req, res, next) => {
 });
 
 const editWorkExperience = catchAsyncError(async (req, res, next) => {
-  let userId = req.query.id;
-  if (userId) {
-    let user = await User.findOne({ id: req.user._id });
-    if (user) {
-      user.work_experience = req.body.data;
+  let user = await User.findById(req.user._id);
+  if (user) {
+    user.work_experience = req.body;
 
-      await user.save().then((user) => {
-        workExperienceAfterSaved = user.work_experience;
-      });
-      res.status(200).json({
-        success: true,
-        data: workExperienceAfterSaved,
-      });
-    } else {
-      return next(new ErrorHandler('Invalid ID', 400));
-    }
+    let workExperienceAfterSaved = null;
+
+    await user.save().then((user) => {
+      workExperienceAfterSaved = user.work_experience;
+    });
+    res.status(200).json({
+      success: true,
+      data: workExperienceAfterSaved,
+    });
+  } else {
+    return next(new ErrorHandler('Invalid ID', 400));
   }
 });
 
 const deleteWorkExperience = catchAsyncError(async (req, res, next) => {
-  let userId = req.query.id;
-  if (userId) {
-    let user = await User.findOne({ id: req.user._id });
-    if (user) {
-      user.work_experience = req.body.data;
+  let user = await User.findById(req.user._id);
+  if (user) {
+    user.work_experience = req.body;
 
-      await user.save().then((user) => {
-        workExperienceAfterSaved = user.work_experience;
-      });
-      res.status(200).json({
-        success: true,
-        data: workExperienceAfterSaved,
-      });
-    } else {
-      return next(new ErrorHandler('Invalid ID', 400));
-    }
+    let workExperienceAfterSaved = null;
+
+    await user.save().then((user) => {
+      workExperienceAfterSaved = user.work_experience;
+    });
+    res.status(200).json({
+      success: true,
+      data: workExperienceAfterSaved,
+    });
+  } else {
+    return next(new ErrorHandler('Invalid ID', 400));
   }
 });
 

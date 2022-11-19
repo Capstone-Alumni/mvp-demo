@@ -13,7 +13,7 @@ const handler = nc({ onError });
 dbConnect();
 handler.use(isAuthenticatedUser).get(viewMyWorkExperience);
 handler.use(isAuthenticatedUser).post(newWorkExperience);
-handler.use(isAuthenticatedUser).post(deleteWorkExperience);
-handler.use(isAuthenticatedUser).post(editWorkExperience);
+handler.use(isAuthenticatedUser).delete(deleteWorkExperience);
+handler.use(isAuthenticatedUser).put(editWorkExperience);
 
 export default handler;
