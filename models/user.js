@@ -52,7 +52,6 @@ const userSchema = new mongoose.Schema({
   work_experience: {
     type: Array,
   },
-  onQuiz: {
   role_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Role',
