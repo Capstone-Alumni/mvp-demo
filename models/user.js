@@ -42,6 +42,9 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: 'user',
   },
+  work_experience: {
+    type: Array,
+  },
   onQuiz: {
     type: String,
     default: null,
