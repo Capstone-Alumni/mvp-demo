@@ -9,8 +9,8 @@ export const loginInputs = [
     name: 'email',
   },
   {
-    label: 'Password',
-    placeholder: 'Min. 8 characters',
+    label: 'Mật khẩu',
+    placeholder: 'password',
     type: 'password',
     keyName: '2',
     name: 'password',
@@ -19,15 +19,15 @@ export const loginInputs = [
 
 export const signUpInputs = [
   {
-    label: 'Username',
-    placeholder: 'username',
+    label: 'Tên tài khoản',
+    placeholder: 'nguyenvana',
     type: 'text',
     keyName: 'username',
     name: 'username',
   },
   {
-    label: 'Full name',
-    placeholder: 'full name',
+    label: 'Họ tên',
+    placeholder: 'Nguyễn Văn A',
     type: 'text',
     keyName: 'fullname',
     name: 'fullname',
@@ -40,7 +40,7 @@ export const signUpInputs = [
     name: 'email',
   },
   {
-    label: 'School year',
+    label: 'Niên khoá',
     placeholder: '2001-2004',
     type: 'select',
     keyname: 'school-year',
@@ -48,7 +48,7 @@ export const signUpInputs = [
     selectItems: schoolYears,
   },
   {
-    label: 'Class',
+    label: 'Lớp',
     placeholder: '12A1',
     type: 'select',
     keyname: 'classes',
@@ -56,15 +56,15 @@ export const signUpInputs = [
     selectItems: classes,
   },
   {
-    label: 'Password',
-    placeholder: 'Min. 8 characters',
+    label: 'Mật khẩu',
+    placeholder: 'password',
     type: 'password',
     keyName: '2',
     name: 'password',
   },
   {
-    label: 'Confirm Password',
-    placeholder: 'Confirm your password',
+    label: 'Xác thực mật khâủ',
+    placeholder: 'password',
     type: 'password',
     keyName: '3',
     name: 'passwordConfirmation',
