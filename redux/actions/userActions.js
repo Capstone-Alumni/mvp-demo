@@ -19,7 +19,6 @@ import {
 // Register user
 export const registerUser = (userData) => async (dispatch) => {
   try {
-    console.log(userData);
     dispatch({
       type: REGISTER_USER_REQUEST,
     });
@@ -35,7 +34,6 @@ export const registerUser = (userData) => async (dispatch) => {
       type: REGISTER_USER_SUCCESS,
     });
   } catch (error) {
-    console.log(error);
     dispatch({
       type: REGISTER_USER_FAIL,
       payload: error.response.data.message,

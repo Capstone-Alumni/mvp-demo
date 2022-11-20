@@ -10,7 +10,6 @@ const Login = () => {
   const classes = useStyles();
 
   const handleFilledForm = async (user) => {
-    console.log('login', user);
     const result = await signIn('credentials', {
       redirect: false,
       email: user.email,

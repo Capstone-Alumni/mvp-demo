@@ -45,7 +45,6 @@ const registerUser = catchAsyncError(async (req, res) => {
 });
 
 const forgotPassword = catchAsyncError(async (req, res, next) => {
-  console.log(req.body.email);
   const user = await User.findOne({ email: req.body.email });
   if (!user) {
     return next(new ErrorHandler('User not found with this email', 404));

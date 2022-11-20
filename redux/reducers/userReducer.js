@@ -45,7 +45,6 @@ export const authReducer = (state = { user: null }, action) => {
 };
 
 export const loadedUserReducer = (state = { loading: true }, action) => {
-  console.log(action, state);
   switch (action.type) {
     case LOAD_USER_REQUEST:
       return {

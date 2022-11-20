@@ -10,7 +10,6 @@ const useAxios = () => {
 
   const fetchData = ({ url, method, body = null, headers = { 'Content-Type': 'application/json', } }) => {
     setloading(true);
-    console.log(body);
     axios[method](url, body, {
       headers,
     })

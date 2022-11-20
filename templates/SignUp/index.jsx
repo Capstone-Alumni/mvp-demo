@@ -25,7 +25,6 @@ const SignUp = () => {
   }, [dispatch, success, error]);
 
   const handleFilledForm = (user) => {
-    console.log('register', user);
     dispatch(registerUser({ ...user }));
   };
   return (

@@ -130,7 +130,6 @@ const InformationForm = ({ defaultValues, afterSaved }) => {
   });
 
   const onSubmit = (values) => {
-    console.log(values);
     dispatch(updateUserProfile(values));
     afterSaved();
   }

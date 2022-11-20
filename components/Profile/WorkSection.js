@@ -46,7 +46,6 @@ const WorkSection = ({ editable, uid }) => {
   const { work_experience: workData } = currentProfile;
 
   const onAddWork = async (values) => {
-    console.log(values);
     await fetchData({
       method: 'post',
       url: '/api/workExperience',

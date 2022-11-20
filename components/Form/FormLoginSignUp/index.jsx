@@ -45,7 +45,6 @@ const Form = ({ type, title, inputs, handleFilledForm }) => {
     resolver: yupResolver(type === 'login' ? schemaLogin : schemaSignUp),
   });
 
-  console.log(errors);
 
   const handleRenderInputs = (register, errors) => {
     return inputs.map((input) => {

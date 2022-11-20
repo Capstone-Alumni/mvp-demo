@@ -162,7 +162,7 @@ const Directory = () => {
           : (
             <>
               <Typography style={{ marginBottom: theme.spacing(2) }}>
-                Có {res.filteredUsersCount} kết quả tìm kiếm
+                Có {res?.filteredUsersCount ?? 0} kết quả tìm kiếm
               </Typography>
               {
                 res.users.map((data) => (
