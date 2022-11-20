@@ -1,9 +1,11 @@
+import uniqid from 'uniqid';
 import User from '../models/user';
 import catchAsyncError from '../middlewares/catchAsyncError';
 import ErrorHandler from '../utils/errorHandler';
 
 const viewMyWorkExperience = catchAsyncError(async (req, res, next) => {
-  const user = await User.findById(req.user._id);
+  const uid = req.user?._id || req.query.id;
+  const user = await User.findById(uid);
   res.status(200).json({
     success: true,
     data: user.work_experience,
@@ -14,6 +16,7 @@ const newWorkExperience = catchAsyncError(async (req, res, next) => {
   let user = await User.findById(req.user._id);
   if (user) {
     const data = {
+      id: uniqid(),
       job_name: req.body.job_name,
       working_time: req.body.working_time,
       company_name: req.body.company_name,
@@ -39,7 +42,7 @@ const newWorkExperience = catchAsyncError(async (req, res, next) => {
 const editWorkExperience = catchAsyncError(async (req, res, next) => {
   let user = await User.findById(req.user._id);
   if (user) {
-    user.work_experience = req.body;
+    user.work_experience = req.body.work_experience;
 
     let workExperienceAfterSaved = null;
 

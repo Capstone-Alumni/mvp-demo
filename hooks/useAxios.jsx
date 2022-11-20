@@ -8,9 +8,12 @@ const useAxios = () => {
   const [error, setError] = useState('');
   const [loading, setloading] = useState(true);
 
-  const fetchData = ({ url, method, body = null, headers = null }) => {
+  const fetchData = ({ url, method, body = null, headers = { 'Content-Type': 'application/json', } }) => {
     setloading(true);
-    axios[method](url, JSON.parse(headers), JSON.parse(body))
+    console.log(body);
+    axios[method](url, body, {
+      headers,
+    })
       .then((res) => {
         setResponse(res.data);
       })

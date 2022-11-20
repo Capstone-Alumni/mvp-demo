@@ -41,22 +41,17 @@ const WorkForm = ({ defaultValues, onSave }) => {
       {[
         {
           label: 'Nơi công tác/Công ty',
-          name: 'name',
+          name: 'company_name',
           type: 'text',
         },
         {
           label: 'Chức vụ',
-          name: 'role',
-          type: 'text',
-        },
-        {
-          label: 'Tỉnh/thành phố',
-          name: 'location',
+          name: 'job_name',
           type: 'text',
         },
         {
           label: 'Thời gian',
-          name: 'time',
+          name: 'working_time',
           type: 'text',
           placeholder: 'yyyy-yyyy'
         },

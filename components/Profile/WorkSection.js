@@ -9,6 +9,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import useAxios from '../../hooks/useAxios';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
+import { useEffect } from 'react';
+import { LOAD_PROFILE_SUCCESS } from '../../redux/constants/userConstants';
 
 const mockData = [
   {
@@ -27,7 +29,7 @@ const mockData = [
   }
 ]
 
-const WorkSection = ({ editable }) => {
+const WorkSection = ({ editable, uid }) => {
   const theme = useTheme();
 
   const [openAddForm, setOpenAddForm] = useState(false);
@@ -41,34 +43,56 @@ const WorkSection = ({ editable }) => {
     return state.loadedUser.currentProfile;
   });
 
-  // const { works: workData } = currentProfile;
-  const workData = mockData;
+  const { work_experience: workData } = currentProfile;
 
   const onAddWork = async (values) => {
     console.log(values);
     await fetchData({
       method: 'post',
-      url: '/api/works',
+      url: '/api/workExperience',
       body: values,
     });
-    if (res) {
-      dispatch({
-        type: LOAD_PROFILE_SUCCESS,
-        payload: res.user,
-      })
-    }
     setOpenAddForm(false);
   }
 
-  const onDeleteWork = (id) => {
-    console.log(id);
+  const onDeleteWork = async (id) => {
+    const currentData = [...workData];
+    const deleteIndex = currentData.findIndex((item) => item.id === id);
+    currentData.splice(deleteIndex, 1);
+    await fetchData({
+      method: 'put',
+      url: '/api/workExperience',
+      body: {
+        work_experience: currentData,
+      }
+    });
   }
 
-  const onUpdateWork = (id, values) => {
-    console.log(id);
-    console.log(values);
+  const onUpdateWork = async (id, values) => {
+    const currentData = [...workData];
+    const updateIndex = currentData.findIndex((item) => item.id === id);
+    currentData[updateIndex] = values;
+    await fetchData({
+      method: 'put',
+      url: '/api/workExperience',
+      body: {
+        work_experience: currentData,
+      }
+    });
     setSelectedEditId(null);
   }
+
+  useEffect(() => {
+    if (res) {
+      dispatch({
+        type: LOAD_PROFILE_SUCCESS,
+        payload: {
+          ...currentProfile,
+          work_experience: res.data,
+        },
+      });
+    }
+  }, [res]);
 
   return (
     <div
@@ -99,50 +123,55 @@ const WorkSection = ({ editable }) => {
       {
         openAddForm
           ? (
-            <WorkForm onSave={() => onAddWork()} />
+            <WorkForm onSave={(values) => onAddWork(values)} />
           )
           : null
       }
 
       <Box style={{ paddingLeft: theme.spacing(6) }}>
         {
-          workData.map((item, index) => (
-            <>
-              {
-                selectedEditId === item.id
-                  ? (
-                    <WorkForm defaultValues={item} onSave={(values) => onUpdateWork(item.id, values)} />
-                  )
-                  : (
-                    <Box style={{ display: 'flex' }}>
-                      <Box style={{ flex: 1 }}>
-                        <ProfileInfoRow title="Nơi công tác/Công ty" content={item.name} />
-                        <ProfileInfoRow title="Chức vụ" content={item.role} />
-                        <ProfileInfoRow title="Tỉnh/Thành phố" content={item.location} />
-                        <ProfileInfoRow title="Thời gian" content={item.time} />
-                      </Box>
-                      
-                      {
-                        editable
-                          ? (
-                            <Box>
-                              <IconButton onClick={() => setSelectedEditId(item.id)}><EditIcon /></IconButton>
-                              <IconButton onClick={() => onDeleteWork(item.id)}><DeleteIcon color="error" /></IconButton>
-                            </Box>
-                          )
-                          : null
-                      }
-                    </Box>
-                  )
-              }
+          workData && workData.length > 0
+            ? (
+              workData?.map((item, index) => (
+                <>
+                  {
+                    selectedEditId === item.id
+                      ? (
+                        <WorkForm defaultValues={item} onSave={(values) => onUpdateWork(item.id, values)} />
+                      )
+                      : (
+                        <Box style={{ display: 'flex' }}>
+                          <Box style={{ flex: 1 }}>
+                            <ProfileInfoRow title="Nơi công tác/Công ty" content={item.company_name} />
+                            <ProfileInfoRow title="Chức vụ" content={item.job_name} />
+                            <ProfileInfoRow title="Thời gian" content={item.working_time} />
+                          </Box>
+                          
+                          {
+                            editable
+                              ? (
+                                <Box>
+                                  <IconButton onClick={() => setSelectedEditId(item.id)}><EditIcon /></IconButton>
+                                  <IconButton onClick={() => onDeleteWork(item.id)}><DeleteIcon color="error" /></IconButton>
+                                </Box>
+                              )
+                              : null
+                          }
+                        </Box>
+                      )
+                  }
 
-              {
-                index + 1 < mockData.length
-                  ? <Divider style={{ marginTop: theme.spacing(2), marginBottom: theme.spacing(2) }} />
-                  : null
-              }
-            </>
-          ))
+                  {
+                    index + 1 < workData.length
+                      ? <Divider style={{ marginTop: theme.spacing(2), marginBottom: theme.spacing(2) }} />
+                      : null
+                  }
+                </>
+              ))
+            )
+            : (
+              <Typography>Không có công việc</Typography>
+            )
         }
 
       </Box>
