@@ -41,6 +41,8 @@ const userProfileById = catchAsyncError(async (req, res, next) => {
       Role,
     });
 
+    console.log(user);
+
     if (user && user.role_id.name !== roleOf.TEACHER) {
       if (!user.major) {
         await Alumni.findOneAndUpdate(

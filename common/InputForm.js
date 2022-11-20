@@ -1,3 +1,5 @@
+import { classes, schoolYears } from "./staticData";
+
 export const loginInputs = [
   {
     label: 'Email',
@@ -17,11 +19,41 @@ export const loginInputs = [
 
 export const signUpInputs = [
   {
+    label: 'Username',
+    placeholder: 'username',
+    type: 'text',
+    keyName: 'username',
+    name: 'username',
+  },
+  {
+    label: 'Full name',
+    placeholder: 'full name',
+    type: 'text',
+    keyName: 'fullname',
+    name: 'fullname',
+  },
+  {
     label: 'Email',
     placeholder: 'mail@website.com',
     type: 'text',
     keyName: '1',
     name: 'email',
+  },
+  {
+    label: 'School year',
+    placeholder: '2001-2004',
+    type: 'select',
+    keyname: 'school-year',
+    name: 'school_year',
+    selectItems: schoolYears,
+  },
+  {
+    label: 'Class',
+    placeholder: '12A1',
+    type: 'select',
+    keyname: 'classes',
+    name: 'classes',
+    selectItems: classes,
   },
   {
     label: 'Password',

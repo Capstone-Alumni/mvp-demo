@@ -22,9 +22,9 @@ const AccountSection = () => {
           <AccountCircleIcon fontSize="large" style={{ color: indigo[500], marginRight: theme.spacing(1) }} />
           Tài khoản
         </Typography>
-        <IconButton aria-label="edit-personla-info">
+        {/* <IconButton aria-label="edit-personla-info">
           <EditIcon />
-        </IconButton>
+        </IconButton> */}
       </Box>
       <Box style={{ paddingLeft: theme.spacing(6) }}>
         <ProfileInfoRow title="Username" content="trung.truong.123" />

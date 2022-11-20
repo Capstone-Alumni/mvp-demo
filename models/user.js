@@ -49,6 +49,9 @@ const userSchema = new mongoose.Schema({
   date_of_birth: {
     type: String,
   },
+  work_experience: {
+    type: Array,
+  },
   role_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Role',

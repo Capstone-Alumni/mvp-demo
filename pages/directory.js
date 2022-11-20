@@ -9,22 +9,6 @@ const Index = () => {
   );
 };
 
-Index.getLayout = (page) => <Layout title="Account | Easy10">{page}</Layout>;
-
-export const getServerSideProps = wrapper.getServerSideProps(
-  (store) =>
-    async ({ req, params }) => {
-      const session = await getSession({ req });
-
-      if (!session) {
-        return {
-          redirect: {
-            destination: '/',
-            permanent: false,
-          },
-        };
-      }
-    }
-);
+Index.getLayout = (page) => <Layout title="Alumni">{page}</Layout>;
 
 export default Index;

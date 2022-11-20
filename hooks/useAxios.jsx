@@ -3,13 +3,17 @@ import axios from 'axios';
 
 axios.defaults.baseURL = 'http://localhost:3000';
 
-const useAxios = ({ url, method, body = null, headers = null }) => {
+const useAxios = () => {
   const [response, setResponse] = useState(null);
   const [error, setError] = useState('');
   const [loading, setloading] = useState(true);
 
-  const fetchData = () => {
-    axios[method](url, JSON.parse(headers), JSON.parse(body))
+  const fetchData = ({ url, method, body = null, headers = { 'Content-Type': 'application/json', } }) => {
+    setloading(true);
+    console.log(body);
+    axios[method](url, body, {
+      headers,
+    })
       .then((res) => {
         setResponse(res.data);
       })
@@ -21,11 +25,11 @@ const useAxios = ({ url, method, body = null, headers = null }) => {
       });
   };
 
-  useEffect(() => {
-    fetchData();
-  }, [method, url, body, headers]);
+//  useEffect(() => {
+//    fetchData();
+//  }, [method, url, body, headers]);
 
-  return { response, error, loading };
+  return { fetchData, response, error, loading };
 };
 
 export default useAxios;
