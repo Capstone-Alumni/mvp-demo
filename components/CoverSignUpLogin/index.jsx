@@ -10,19 +10,8 @@ const CoverSignUpLogin = () => {
     <>
       <div className={classes.bigImg}>
         <div className={classes.containerIntro}>
-          <Typography className={classes.introTitle}>
-            Easily scale with serverless instances
-          </Typography>
-          <Typography className={classes.slogan}>
-            Effortlessly scale to meet app demand with minimal configuration.
-            Just pay for the operations you run.
-          </Typography>
-          <Link href="/landing" passHref>
-            <Typography className={classes.ourStoryText}>
-              Our story
-              <ArrowRightAltIcon className={classes.icon} />
-            </Typography>
-          </Link>
+          <Typography className={classes.introTitle} />
+          <Typography className={classes.slogan} />
         </div>
       </div>
     </>

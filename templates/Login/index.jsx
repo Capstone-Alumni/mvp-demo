@@ -27,7 +27,7 @@ const Login = () => {
       <div className={classes.containerLogin}>
         <Form
           type="login"
-          title="Login"
+          title="Đăng nhập"
           inputs={loginInputs}
           handleFilledForm={handleFilledForm}
         />

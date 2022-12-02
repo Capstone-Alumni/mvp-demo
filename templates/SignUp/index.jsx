@@ -32,7 +32,7 @@ const SignUp = () => {
       <div className={classes.containerLogin}>
         <Form
           type="signup"
-          title="Sign Up"
+          title="Đăng ký"
           inputs={signUpInputs}
           handleFilledForm={handleFilledForm}
         />

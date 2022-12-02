@@ -11,18 +11,18 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 
 const schemaSignUp = yup
   .object({
-    email: yup.string().email('Invalid format').required('Email is required'),
-    school_year: yup.string().required('This field is required'),
-    classes: yup.string().required('This field is required'),
+    email: yup.string().email('Invalid format').required('Bắt buộc'),
+    school_year: yup.string().required('Bắt buộc'),
+    classes: yup.string().required('Bắt buộc'),
     password: yup
       .string()
-      .required('Password is required')
-      .min(6, 'Your password must greater than 6 characters')
-      .max(20, 'Your password must less than 20 characters'),
+      .required('Bắt buộc')
+      .min(6, 'Ít nhất 6 ký tự')
+      .max(20, 'Tối đa 20 ký tự'),
     passwordConfirmation: yup
       .string()
-      .required('Repeat password is required')
-      .test('passwords-match', 'Passwords does not match', function (value) {
+      .required('Bắt buộc')
+      .test('passwords-match', 'Mật khẩu không khớp', function (value) {
         return this.parent.password === value;
       }),
   })
@@ -30,8 +30,8 @@ const schemaSignUp = yup
 
 const schemaLogin = yup
   .object({
-    email: yup.string().required('Email is required'),
-    password: yup.string().required('Password is required'),
+    email: yup.string().required('Bắt buộc'),
+    password: yup.string().required('Bắt buộc'),
   })
   .required();
 
@@ -71,34 +71,14 @@ const Form = ({ type, title, inputs, handleFilledForm }) => {
   return (
     <>
       <Head>
-        <title>{title + ' | Easy10'}</title>
+        <title>{title}</title>
         <meta charSet="utf-8" />
         <meta name="viewport" content="initial-scale=1.0,width=device-width" />
       </Head>
       <Typography className={classes.title}>{title}</Typography>
-      <Typography className={classes.description}>
-        See your growth and get consulting support
-      </Typography>
-      <Button className={classes.buttonGoogle}>
-        <img src="/images/googleIconColor.png" />
-        <Typography>{title} with Google</Typography>
-      </Button>
-      <div className={classes.containerOr}>
-        <div className={classes.containerTypo}>
-          <Typography>or {title} with Email</Typography>
-        </div>
-      </div>
+      <Typography className={classes.description} />
       <form onSubmit={handleSubmit(onSubmit)}>
         {handleRenderInputs(register, errors)}
-        <div className={classes.forgotPassword}>
-          {type == 'login' && (
-            <Link href="/password/forgot" passHref>
-              <Typography className={classes.purpleText}>
-                Forgot Password?
-              </Typography>
-            </Link>
-          )}
-        </div>
 
         <Button className={classes.buttonLogin} type="submit">
           {/* <CircularProgress size={16} /> */}
@@ -106,14 +86,14 @@ const Form = ({ type, title, inputs, handleFilledForm }) => {
         </Button>
       </form>
       <Typography className={classes.blackText}>
-        {type == 'signup' ? 'Have an account ?' : 'Not registered yet?'}{' '}
+        {type == 'signup' ? 'Đã có tài khoản ?' : 'Chưa đăng ký?'}{' '}
         {type == 'signup' ? (
           <Link href="/login" passHref>
-            <span className={classes.purpleText}>Login</span>
+            <span className={classes.purpleText}>Đăng nhập</span>
           </Link>
         ) : (
           <Link href="/signup" passHref>
-            <span className={classes.purpleText}>Create an account</span>
+            <span className={classes.purpleText}>Tạo tài khoản</span>
           </Link>
         )}
       </Typography>
