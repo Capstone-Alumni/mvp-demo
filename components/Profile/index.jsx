@@ -34,7 +34,7 @@ const Profile = () => {
     >
       <PersonalInformation editable={isOwner} /> 
 
-      { isOwner ? <AccountSection /> : null}
+      {/* { isOwner ? <AccountSection /> : null} */}
 
       <WorkSection uid={router.query.id} editable={isOwner}/>
     </Container>
